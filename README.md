@@ -33,14 +33,14 @@ Output files retain the original channel titles after splitting (e.g., imgName (
 
 📂 Output Example
 
-/your/input/folder/
-├── image1.tif
-├── image2.tif
-└── output/
-    ├── image1 (c1).tif
-    ├── image1 (c2).tif
-    ├── image2 (c1).tif
-    └── image2 (c2).tif
+    /your/input/folder/
+    ├── image1.tif
+    ├── image2.tif
+    └── output/
+        ├── image1 (c1).tif
+        ├── image1 (c2).tif
+        ├── image2 (c1).tif
+        └── image2 (c2).tif
 
 📄 License
 
