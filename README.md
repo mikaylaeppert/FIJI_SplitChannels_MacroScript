@@ -46,3 +46,42 @@ Output files retain the original channel titles after splitting (e.g., imgName (
 
 Feel free to modify or adapt this script for your needs.
 
+
+    dir = getDirectory("Select A folder");  // Prompt user to select a folder and store its path in 'dir'
+
+    fileList = getFileList(dir);  // Get a list of all files and folders in the selected directory
+
+    output_dir = dir + File.separator + "output" + File.separator;  // Define output directory path as a subfolder named "output" inside 'dir'
+
+    File.makeDirectory(output_dir);  // Create the output directory if it doesn't already exist
+
+    setBatchMode(true);  // Enable batch mode to speed up processing and suppress image display updates
+
+    for (i = 0; i < lengthOf(fileList); i++) {  // Loop through every item in the file list
+
+        current_imagePath = dir + fileList[i];  // Construct the full path to the current file
+
+        if (!File.isDirectory(current_imagePath)) {  // Check if the current item is NOT a directory (i.e., is a file)
+        
+            open(current_imagePath);  // Open the current image file
+        
+            getDimensions(width, height, channels, slices, frames);  // Get image dimensions and number of channels
+        
+            if (channels > 1) run("Split Channels");  // If image has multiple channels, split them into separate images
+        
+            ch_nbr = nImages;  // Set 'ch_nbr' to the number of currently open images (channels after split)
+        
+            for (c = 1; c <= ch_nbr; c++) {  // Loop over each channel image
+            
+                selectImage(c);  // Select the c-th channel image
+            
+                currentImage_name = getTitle();  // Get the title (filename) of the current image
+            
+                saveAs("tiff", output_dir + currentImage_name);  // Save the image as TIFF in the output directory
+            }
+        
+            run("Close All");  // Close all open images before processing the next file
+        }
+    }
+
+    setBatchMode(false);  // Disable batch mode to return to normal ImageJ behavior
